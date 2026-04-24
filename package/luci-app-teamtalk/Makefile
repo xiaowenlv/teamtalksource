@@ -48,8 +48,8 @@ define Package/luci-app-teamtalk/install
 	$(INSTALL_DATA) $(PKG_SRC_DIR)/root/etc/config/teamtalk $(1)/etc/config/teamtalk
 	$(INSTALL_BIN) $(PKG_SRC_DIR)/root/etc/init.d/teamtalk $(1)/etc/init.d/teamtalk
 	$(INSTALL_BIN) $(PKG_SRC_DIR)/root/usr/libexec/teamtalk/teamtalk-helper.sh $(1)/usr/libexec/teamtalk/teamtalk-helper.sh
-	$(INSTALL_DATA) $(PKG_SRC_DIR)/po/en/teamtalk.po $(1)/usr/lib/lua/luci/i18n/teamtalk-en.po
-	$(INSTALL_DATA) $(PKG_SRC_DIR)/po/zh-cn/teamtalk.po $(1)/usr/lib/lua/luci/i18n/teamtalk-zh-cn.po
+	$(INSTALL_DATA) $(PKG_SRC_DIR)/files/usr/lib/lua/luci/i18n/teamtalk-en.po $(1)/usr/lib/lua/luci/i18n/teamtalk-en.po
+	$(INSTALL_DATA) $(PKG_SRC_DIR)/files/usr/lib/lua/luci/i18n/teamtalk-zh-cn.po $(1)/usr/lib/lua/luci/i18n/teamtalk-zh-cn.po
 endef
 
 $(eval $(call BuildPackage,luci-app-teamtalk))
