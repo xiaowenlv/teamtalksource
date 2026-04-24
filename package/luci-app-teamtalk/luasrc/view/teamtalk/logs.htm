@@ -1,0 +1,110 @@
+<%+header%>
+
+<div class="cbi-map">
+    <%:TeamTalk Logs%>
+
+    <div class="cbi-section">
+        <div class="cbi-section-title"><%:Log Settings%></div>
+        <div class="cbi-section-node">
+            <table class="table table-striped">
+                <tr>
+                    <td width="30%"><%:Log Lines%>:</td>
+                    <td>
+                        <select id="log-lines" onchange="loadLogs()">
+                            <option value="50">50</option>
+                            <option value="100" selected>100</option>
+                            <option value="200">200</option>
+                            <option value="500">500</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><%:Auto Refresh%>:</td>
+                    <td>
+                        <input type="checkbox" id="auto-refresh" onchange="toggleAutoRefresh()" />
+                        <span id="refresh-interval"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="cbi-section">
+        <div class="cbi-section-title"><%:Container Logs%></div>
+        <div class="cbi-section-node">
+            <div style="margin-bottom: 10px;">
+                <button class="btn btn-primary" onclick="loadLogs()"><%:Refresh Logs%></button>
+                <button class="btn" onclick="clearLogDisplay()"><%:Clear Display%></button>
+                <button class="btn btn-info" onclick="downloadLogs()"><%:Download Logs%></button>
+            </div>
+            <div id="log-content" style="background:#1a1a1a;color:#0f0;font-family:monospace;font-size:12px;padding:10px;max-height:500px;overflow:auto;border-radius:4px;">
+                <%=logs or "No logs available"%>
+            </div>
+        </div>
+    </div>
+
+    <div class="cbi-section">
+        <div class="cbi-section-title"><%:Server Log Directory%></div>
+        <div class="cbi-section-node">
+            <p><%:Log files location:%> <code><%=uci_volume.srv_dir or "/mnt/teamtalk/srv"%>/logs/</code></p>
+            <button class="btn" onclick="loadServerLogs()"><%:List Log Files%></button>
+            <pre id="server-logs" style="background:#1a1a1a;color:#0f0;font-family:monospace;font-size:12px;padding:10px;max-height:200px;overflow:auto;border-radius:4px;margin-top:10px;">-</pre>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+var autoRefreshTimer = null;
+var refreshInterval = 5000;
+
+function loadLogs() {
+    var lines = document.getElementById('log-lines').value;
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'get_logs', lines: lines }, function(x, y) {
+        if (y && y.logs) {
+            document.getElementById('log-content').innerText = y.logs;
+            document.getElementById('log-content').scrollTop = document.getElementById('log-content').scrollHeight;
+        }
+    });
+}
+
+function clearLogDisplay() {
+    document.getElementById('log-content').innerText = '<%:Log display cleared%>';
+}
+
+function downloadLogs() {
+    var logs = document.getElementById('log-content').innerText;
+    var blob = new Blob([logs], { type: 'text/plain' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'teamtalk_logs_' + new Date().toISOString().slice(0, 10) + '.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function loadServerLogs() {
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'list_server_logs' }, function(x, y) {
+        document.getElementById('server-logs').innerText = y.output || '-';
+    });
+}
+
+function toggleAutoRefresh() {
+    var checkbox = document.getElementById('auto-refresh');
+    if (checkbox.checked) {
+        document.getElementById('refresh-interval').innerText = 'Every ' + (refreshInterval / 1000) + 's';
+        autoRefreshTimer = window.setInterval(loadLogs, refreshInterval);
+    } else {
+        document.getElementById('refresh-interval').innerText = '';
+        if (autoRefreshTimer) {
+            clearInterval(autoRefreshTimer);
+            autoRefreshTimer = null;
+        }
+    }
+}
+
+window.setTimeout(function() {
+    loadLogs();
+}, 1000);
+</script>
+
+<%+footer%>

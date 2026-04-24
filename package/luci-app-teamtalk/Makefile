@@ -9,6 +9,8 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
 
+PKG_SRC_DIR:=$(CURDIR)
+
 define Package/luci-app-teamtalk
   SECTION:=luci
   CATEGORY:=LuCI
@@ -39,15 +41,15 @@ define Package/luci-app-teamtalk/install
 	$(INSTALL_DIR) $(1)/usr/libexec/teamtalk
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
 
-	$(INSTALL_DATA) $(TOPDIR)/luasrc/controller/teamtalk.lua $(1)/usr/lib/lua/luci/controller/teamtalk.lua
-	$(INSTALL_DATA) $(TOPDIR)/luasrc/model/cbi/teamtalk.lua $(1)/usr/lib/lua/luci/model/cbi/teamtalk.lua
-	$(CP) $(TOPDIR)/luasrc/view/teamtalk/* $(1)/usr/lib/lua/luci/view/teamtalk/
-	$(CP) -r $(TOPDIR)/htdocs/adminkit/js $(1)/usr/share/teamtalk/
-	$(INSTALL_DATA) $(TOPDIR)/root/etc/config/teamtalk $(1)/etc/config/teamtalk
-	$(INSTALL_BIN) $(TOPDIR)/root/etc/init.d/teamtalk $(1)/etc/init.d/teamtalk
-	$(INSTALL_BIN) $(TOPDIR)/root/usr/libexec/teamtalk/teamtalk-helper.sh $(1)/usr/libexec/teamtalk/teamtalk-helper.sh
-	$(INSTALL_DATA) $(TOPDIR)/po/en/teamtalk.po $(1)/usr/lib/lua/luci/i18n/teamtalk-en.po
-	$(INSTALL_DATA) $(TOPDIR)/po/zh-cn/teamtalk.po $(1)/usr/lib/lua/luci/i18n/teamtalk-zh-cn.po
+	$(INSTALL_DATA) $(PKG_SRC_DIR)/luasrc/controller/teamtalk.lua $(1)/usr/lib/lua/luci/controller/teamtalk.lua
+	$(INSTALL_DATA) $(PKG_SRC_DIR)/luasrc/model/cbi/teamtalk.lua $(1)/usr/lib/lua/luci/model/cbi/teamtalk.lua
+	$(CP) $(PKG_SRC_DIR)/luasrc/view/teamtalk/* $(1)/usr/lib/lua/luci/view/teamtalk/
+	$(CP) -r $(PKG_SRC_DIR)/htdocs/adminkit/js $(1)/usr/share/teamtalk/
+	$(INSTALL_DATA) $(PKG_SRC_DIR)/root/etc/config/teamtalk $(1)/etc/config/teamtalk
+	$(INSTALL_BIN) $(PKG_SRC_DIR)/root/etc/init.d/teamtalk $(1)/etc/init.d/teamtalk
+	$(INSTALL_BIN) $(PKG_SRC_DIR)/root/usr/libexec/teamtalk/teamtalk-helper.sh $(1)/usr/libexec/teamtalk/teamtalk-helper.sh
+	$(INSTALL_DATA) $(PKG_SRC_DIR)/po/en/teamtalk.po $(1)/usr/lib/lua/luci/i18n/teamtalk-en.po
+	$(INSTALL_DATA) $(PKG_SRC_DIR)/po/zh-cn/teamtalk.po $(1)/usr/lib/lua/luci/i18n/teamtalk-zh-cn.po
 endef
 
 $(eval $(call BuildPackage,luci-app-teamtalk))

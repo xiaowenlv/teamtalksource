@@ -1,0 +1,563 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "TeamTalk"
+msgstr "TeamTalk"
+
+msgid "TeamTalk Server"
+msgstr "TeamTalk 服务器"
+
+msgid "TeamTalk Status"
+msgstr "TeamTalk 状态"
+
+msgid "TeamTalk Configuration"
+msgstr "TeamTalk 配置"
+
+msgid "TeamTalk Logs"
+msgstr "TeamTalk 日志"
+
+msgid "Docker Actions"
+msgstr "Docker 操作"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Configuration"
+msgstr "配置"
+
+msgid "Users"
+msgstr "用户"
+
+msgid "Logs"
+msgstr "日志"
+
+msgid "Basic Settings"
+msgstr "基本设置"
+
+msgid "Network Ports"
+msgstr "网络端口"
+
+msgid "Database Settings"
+msgstr "数据库设置"
+
+msgid "Storage Paths"
+msgstr "存储路径"
+
+msgid "User List"
+msgstr "用户列表"
+
+msgid "User Details"
+msgstr "用户详情"
+
+msgid "Edit User"
+msgstr "编辑用户"
+
+msgid "User ID"
+msgstr "用户ID"
+
+msgid "Nickname"
+msgstr "昵称"
+
+msgid "Gender"
+msgstr "性别"
+
+msgid "Email"
+msgstr "邮箱"
+
+msgid "Phone"
+msgstr "电话"
+
+msgid "Password"
+msgstr "密码"
+
+msgid "Created Time"
+msgstr "创建时间"
+
+msgid "Actions"
+msgstr "操作"
+
+msgid "View"
+msgstr "查看"
+
+msgid "Edit"
+msgstr "编辑"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Reset"
+msgstr "重置"
+
+msgid "Add User"
+msgstr "添加用户"
+
+msgid "Refresh"
+msgstr "刷新"
+
+msgid "Save Configuration"
+msgstr "保存配置"
+
+msgid "Enable TeamTalk"
+msgstr "启用 TeamTalk"
+
+msgid "Docker Image"
+msgstr "Docker 镜像"
+
+msgid "Container Name"
+msgstr "容器名称"
+
+msgid "HTTP/Login Port"
+msgstr "HTTP/登录端口"
+
+msgid "Message Port"
+msgstr "消息端口"
+
+msgid "Route Port"
+msgstr "路由端口"
+
+msgid "File Server Port"
+msgstr "文件服务器端口"
+
+msgid "MSFS Port"
+msgstr "媒体服务器端口"
+
+msgid "DB Proxy Port"
+msgstr "数据库代理端口"
+
+msgid "MySQL Port"
+msgstr "MySQL 端口"
+
+msgid "MySQL Root Password"
+msgstr "MySQL root 密码"
+
+msgid "Database Name"
+msgstr "数据库名称"
+
+msgid "Database User"
+msgstr "数据库用户"
+
+msgid "Database Password"
+msgstr "数据库密码"
+
+msgid "Redis Port"
+msgstr "Redis 端口"
+
+msgid "Data Directory"
+msgstr "数据目录"
+
+msgid "Log Directory"
+msgstr "日志目录"
+
+msgid "Quick Actions"
+msgstr "快速操作"
+
+msgid "Start TeamTalk"
+msgstr "启动 TeamTalk"
+
+msgid "Stop TeamTalk"
+msgstr "停止 TeamTalk"
+
+msgid "Restart"
+msgstr "重启"
+
+msgid "Remove Container"
+msgstr "删除容器"
+
+msgid "Install Docker"
+msgstr "安装 Docker"
+
+msgid "Docker Status"
+msgstr "Docker 状态"
+
+msgid "Docker Version"
+msgstr "Docker 版本"
+
+msgid "TeamTalk Image"
+msgstr "TeamTalk 镜像"
+
+msgid "Container Status"
+msgstr "容器状态"
+
+msgid "Service Status"
+msgstr "服务状态"
+
+msgid "Service"
+msgstr "服务"
+
+msgid "Port"
+msgstr "端口"
+
+msgid "Container Info"
+msgstr "容器信息"
+
+msgid "Pull Image"
+msgstr "拉取镜像"
+
+msgid "Deploy Container"
+msgstr "部署容器"
+
+msgid "Deploy TeamTalk"
+msgstr "部署 TeamTalk"
+
+msgid "Start"
+msgstr "启动"
+
+msgid "Stop"
+msgstr "停止"
+
+msgid "Remove"
+msgstr "删除"
+
+msgid "Docker Images"
+msgstr "Docker 镜像"
+
+msgid "Docker Containers"
+msgstr "Docker 容器"
+
+msgid "Image Name"
+msgstr "镜像名称"
+
+msgid "Image ID"
+msgstr "镜像ID"
+
+msgid "Log Lines"
+msgstr "日志行数"
+
+msgid "Auto Refresh"
+msgstr "自动刷新"
+
+msgid "Refresh Logs"
+msgstr "刷新日志"
+
+msgid "Clear Display"
+msgstr "清除显示"
+
+msgid "Download Logs"
+msgstr "下载日志"
+
+msgid "System Logs"
+msgstr "系统日志"
+
+msgid "Refresh Syslog"
+msgstr "刷新系统日志"
+
+msgid "Example:"
+msgstr "例如："
+
+msgid "Leave empty to keep"
+msgstr "留空则保持不变"
+
+msgid "Male"
+msgstr "男"
+
+msgid "Female"
+msgstr "女"
+
+msgid "Unknown"
+msgstr "未知"
+
+msgid "Active"
+msgstr "活跃"
+
+msgid "Inactive"
+msgstr "未激活"
+
+msgid "Running"
+msgstr "运行中"
+
+msgid "Stopped"
+msgstr "已停止"
+
+msgid "Installed"
+msgstr "已安装"
+
+msgid "Not Installed"
+msgstr "未安装"
+
+msgid "Are you sure you want to remove the container?"
+msgstr "确定要删除容器吗？"
+
+msgid "Are you sure?"
+msgstr "确定吗？"
+
+msgid "Remove container:"
+msgstr "删除容器："
+
+msgid "Remove image:"
+msgstr "删除镜像："
+
+msgid "Deploy TeamTalk container now?"
+msgstr "现在部署 TeamTalk 容器？"
+
+msgid "Pulling image..."
+msgstr "正在拉取镜像..."
+
+msgid "Pull completed"
+msgstr "拉取完成"
+
+msgid "Error pulling image"
+msgstr "拉取镜像出错"
+
+msgid "Deployment complete"
+msgstr "部署完成"
+
+msgid "Started"
+msgstr "已启动"
+
+msgid "Stopped"
+msgstr "已停止"
+
+msgid "Removed"
+msgstr "已删除"
+
+msgid "Log display cleared"
+msgstr "日志显示已清除"
+
+msgid "No logs available"
+msgstr "暂无日志"
+
+msgid "No system logs"
+msgstr "暂无系统日志"
+
+msgid "User Management"
+msgstr "用户管理"
+
+msgid "User List"
+msgstr "用户列表"
+
+msgid "Add User"
+msgstr "添加用户"
+
+msgid "Edit User"
+msgstr "编辑用户"
+
+msgid "Delete User"
+msgstr "删除用户"
+
+msgid "Username"
+msgstr "用户名"
+
+msgid "Password"
+msgstr "密码"
+
+msgid "Confirm Password"
+msgstr "确认密码"
+
+msgid "Account Type"
+msgstr "账户类型"
+
+msgid "Admin"
+msgstr "管理员"
+
+msgid "Admin (Administrator)"
+msgstr "管理员"
+
+msgid "User"
+msgstr "用户"
+
+msgid "User (Normal)"
+msgstr "普通用户"
+
+msgid "Guest"
+msgstr "访客"
+
+msgid "Rights"
+msgstr "权限"
+
+msgid "Active"
+msgstr "活跃"
+
+msgid "Inactive"
+msgstr "未激活"
+
+msgid "Last Modified"
+msgstr "最后修改"
+
+msgid "Actions"
+msgstr "操作"
+
+msgid "Edit"
+msgstr "编辑"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid "Passwords do not match"
+msgstr "密码不匹配"
+
+msgid "Password cannot be empty"
+msgstr "密码不能为空"
+
+msgid "User saved"
+msgstr "用户已保存"
+
+msgid "Password changed"
+msgstr "密码已修改"
+
+msgid "User deleted"
+msgstr "用户已删除"
+
+msgid "User saved successfully"
+msgstr "用户保存成功"
+
+msgid "Password changed successfully"
+msgstr "密码修改成功"
+
+msgid "User deleted successfully"
+msgstr "用户删除成功"
+
+msgid "Delete user:"
+msgstr "删除用户："
+
+msgid "No configuration found"
+msgstr "未找到配置"
+
+msgid "Audio Codec Settings"
+msgstr "音频编码设置"
+
+msgid "Audio Codec Settings (Default for Channels)"
+msgstr "音频编码设置（频道默认值）"
+
+msgid "Codec Type"
+msgstr "编码器类型"
+
+msgid "Sample Rate"
+msgstr "采样率"
+
+msgid "Channels"
+msgstr "声道"
+
+msgid "Bitrate"
+msgstr "比特率"
+
+msgid "Complexity"
+msgstr "复杂度"
+
+msgid "Recommended: 128 Kbps for good quality"
+msgstr "推荐：128 Kbps 以获得良好音质"
+
+msgid "Save Audio Settings"
+msgstr "保存音频设置"
+
+msgid "Audio settings saved"
+msgstr "音频设置已保存"
+
+msgid "Initial Channel"
+msgstr "初始频道"
+
+msgid "Leave empty for no channel"
+msgstr "留空则不进入任何频道"
+
+msgid "Add New User"
+msgstr "添加新用户"
+
+msgid "Change Password"
+msgstr "修改密码"
+
+msgid "New Password"
+msgstr "新密码"
+
+msgid "Configuration File"
+msgstr "配置文件"
+
+msgid "Server Name"
+msgstr "服务器名称"
+
+msgid "Max Users"
+msgstr "最大用户数"
+
+msgid "User Timeout"
+msgstr "用户超时"
+
+msgid "User Timeout (seconds)"
+msgstr "用户超时（秒）"
+
+msgid "Auto Save"
+msgstr "自动保存"
+
+msgid "Automatically save configuration changes"
+msgstr "自动保存配置更改"
+
+msgid "Login Restrictions"
+msgstr "登录限制"
+
+msgid "Login Attempts (0=unlimited)"
+msgstr "登录尝试次数（0=无限制）"
+
+msgid "Max Logins Per IP (0=unlimited)"
+msgstr "单IP最大登录数（0=无限制）"
+
+msgid "Login Delay (msec)"
+msgstr "登录延迟（毫秒）"
+
+msgid "Max failed login attempts (0=unlimited)"
+msgstr "最大失败登录次数（0=无限制）"
+
+msgid "Maximum logins from same IP address"
+msgstr "同一IP最大登录数"
+
+msgid "Delay between login attempts in milliseconds"
+msgstr "登录尝试之间的延迟（毫秒）"
+
+msgid "File Storage Settings"
+msgstr "文件存储设置"
+
+msgid "Files Root Directory"
+msgstr "文件根目录"
+
+msgid "Max Disk Usage (MB, 0=unlimited)"
+msgstr "最大磁盘使用（MB，0=无限制）"
+
+msgid "Channel Disk Quota (MB, 0=unlimited)"
+msgstr "频道磁盘配额（MB，0=无限制）"
+
+msgid "Maximum disk space for file storage (0=unlimited)"
+msgstr "文件存储最大磁盘空间（0=无限制）"
+
+msgid "Disk quota per channel (0=unlimited)"
+msgstr "每个频道的磁盘配额（0=无限制）"
+
+msgid "System Settings"
+msgstr "系统设置"
+
+msgid "Storage Paths"
+msgstr "存储路径"
+
+msgid "Display name of your server"
+msgstr "服务器的显示名称"
+
+msgid "Message shown when users login"
+msgstr "用户登录时显示的消息"
+
+msgid "Maximum number of concurrent users"
+msgstr "最大同时在线用户数"
+
+msgid "Idle user disconnect timeout"
+msgstr "空闲用户断开超时时间"
+
+msgid "Run the setup wizard to create a new TeamTalk server configuration interactively."
+msgstr "运行设置向导以交互方式创建新的 TeamTalk 服务器配置。"
+
+msgid "Import an existing TeamTalk configuration file (ttd.json)."
+msgstr "导入现有的 TeamTalk 配置文件（ttd.json）。"
+
+msgid "Note: Setup wizard will overwrite existing configuration."
+msgstr "注意：设置向导将覆盖现有配置。"
+
+msgid "Import Configuration"
+msgstr "导入配置"
+
+msgid "Import"
+msgstr "导入"
+
+msgid "Configuration imported"
+msgstr "配置已导入"
+
+msgid "Root directory for file storage"
+msgstr "文件存储的根目录"
+
+msgid "File Storage"
+msgstr "文件存储"

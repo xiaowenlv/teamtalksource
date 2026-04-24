@@ -1,0 +1,378 @@
+<%+header%>
+
+<div class="cbi-map">
+    <%:User Management%>
+
+    <div class="cbi-section">
+        <div class="cbi-section-title"><%:User List%></div>
+        <div class="cbi-section-node">
+            <div style="margin-bottom: 10px;">
+                <button class="btn btn-primary" onclick="showAddUserForm()"><%:Add User%></button>
+                <button class="btn" onclick="refreshUsers()"><%:Refresh%></button>
+            </div>
+            <table class="table table-striped">
+                <tr>
+                    <th><%:Username%></th>
+                    <th><%:Account Type%></th>
+                    <th><%:Rights%></th>
+                    <th><%:Active%></th>
+                    <th><%:Last Modified%></th>
+                    <th><%:Actions%></th>
+                </tr>
+                <% for i, user in ipairs(users or {}) do %>
+                <tr id="user-row-<%=user.username%>">
+                    <td><strong><%=user.username%></strong></td>
+                    <td>
+                        <% if user.user_type == "2" then %>
+                            <span class="label label-danger"><%:Admin%></span>
+                        <% elseif user.user_type == "1" then %>
+                            <span class="label label-success"><%:User%></span>
+                        <% else %>
+                            <span class="label label-default"><%:Guest%></span>
+                        <% end %>
+                    </td>
+                    <td><small><%=user.user_rights or "0"%></small></td>
+                    <td>
+                        <span class="label <% if user.active then %>label-success<% else %>label-default<% end %>">
+                            <%=user.active and "<%:Active%>" or "<%:Inactive%>"%>
+                        </span>
+                    </td>
+                    <td><small><%=user.modified_time or "-"%></small></td>
+                    <td>
+                        <button class="btn btn-xs btn-warning" onclick="editUser('<%=user.username%>')"><%:Edit%></button>
+                        <button class="btn btn-xs btn-info" onclick="changePassword('<%=user.username%>')"><%:Password%></button>
+                        <button class="btn btn-xs btn-danger" onclick="deleteUser('<%=user.username%>')"><%:Delete%></button>
+                    </td>
+                </tr>
+                <% end %>
+            </table>
+        </div>
+    </div>
+
+    <div class="cbi-section" id="add-user-form" style="display:none;">
+        <div class="cbi-section-title"><%:Add New User%></div>
+        <form id="user-form">
+            <input type="hidden" name="action" value="add_user" />
+            <input type="hidden" name="original_username" id="form-original-username" value="" />
+            <div class="cbi-section-node">
+                <table class="table table-striped">
+                    <tr>
+                        <td width="30%"><%:Username%>:</td>
+                        <td><input type="text" name="username" id="form-username" size="30" required /></td>
+                    </tr>
+                    <tr>
+                        <td><%:Password%>:</td>
+                        <td><input type="password" name="password" id="form-password" size="30" required /></td>
+                    </tr>
+                    <tr>
+                        <td><%:Confirm Password%>:</td>
+                        <td><input type="password" name="password_confirm" id="form-password-confirm" size="30" required /></td>
+                    </tr>
+                    <tr>
+                        <td><%:Account Type%>:</td>
+                        <td>
+                            <select name="user_type" id="form-user-type">
+                                <option value="1"><%:User (Normal)%></option>
+                                <option value="2"><%:Admin (Administrator)%></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Initial Channel%>:</td>
+                        <td><input type="text" name="init_channel" id="form-init-channel" size="30" placeholder="<%:Leave empty for no channel%>" /></td>
+                    </tr>
+                    <tr>
+                        <td><%:Active%>:</td>
+                        <td><input type="checkbox" name="active" id="form-active" value="1" checked /></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="cbi-section-node">
+                <button type="button" class="btn btn-primary" onclick="saveUser()"><%:Save%></button>
+                <button type="button" class="btn" onclick="hideUserForm()"><%:Cancel%></button>
+            </div>
+        </form>
+    </div>
+
+    <div class="cbi-section" id="change-password-form" style="display:none;">
+        <div class="cbi-section-title"><%:Change Password%></div>
+        <form id="password-form">
+            <input type="hidden" name="action" value="change_password" />
+            <input type="hidden" name="username" id="password-username" value="" />
+            <div class="cbi-section-node">
+                <table class="table table-striped">
+                    <tr>
+                        <td width="30%"><%:Username%>:</td>
+                        <td><strong id="password-display-username">-</strong></td>
+                    </tr>
+                    <tr>
+                        <td><%:New Password%>:</td>
+                        <td><input type="password" name="new_password" id="form-new-password" size="30" required /></td>
+                    </tr>
+                    <tr>
+                        <td><%:Confirm Password%>:</td>
+                        <td><input type="password" name="password_confirm" id="form-password-confirm2" size="30" required /></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="cbi-section-node">
+                <button type="button" class="btn btn-primary" onclick="saveNewPassword()"><%:Change Password%></button>
+                <button type="button" class="btn" onclick="hidePasswordForm()"><%:Cancel%></button>
+            </div>
+        </form>
+    </div>
+
+    <div class="cbi-section">
+        <div class="cbi-section-title"><%:Audio Codec Settings%></div>
+        <div class="cbi-section-node">
+            <table class="table table-striped">
+                <tr>
+                    <td width="30%"><%:Codec Type%>:</td>
+                    <td>
+                        <select id="audio-codec-type">
+                            <option value="0">Speex</option>
+                            <option value="1">CELT</option>
+                            <option value="2">MP3</option>
+                            <option value="3" selected>Opus</option>
+                            <option value="4">Speex VBR</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><%:Sample Rate%>:</td>
+                    <td>
+                        <select id="audio-samplerate">
+                            <option value="8000">8000 Hz</option>
+                            <option value="16000">16000 Hz</option>
+                            <option value="32000">32000 Hz</option>
+                            <option value="48000" selected>48000 Hz</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><%:Channels%>:</td>
+                    <td>
+                        <select id="audio-channels">
+                            <option value="1">Mono</option>
+                            <option value="2" selected>Stereo</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><%:Bitrate%>:</td>
+                    <td>
+                        <select id="audio-bitrate">
+                            <option value="32000">32 Kbps</option>
+                            <option value="64000">64 Kbps</option>
+                            <option value="128000" selected>128 Kbps</option>
+                            <option value="256000">256 Kbps</option>
+                            <option value="512000">512 Kbps</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><%:Complexity%>:</td>
+                    <td>
+                        <select id="audio-complexity">
+                            <option value="5">5 (Fast)</option>
+                            <option value="10" selected>10 (High Quality)</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <div style="margin-top: 10px;">
+                <button class="btn btn-primary" onclick="saveAudioSettings()"><%:Save Audio Settings%></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cbi-section">
+        <div class="cbi-section-title"><%:Configuration File%></div>
+        <div class="cbi-section-node">
+            <p><%:TeamTalk5 configuration file location:%> <code><%=uci_volume.srv_dir or "/mnt/teamtalk/srv"%>/ttd.json</code></p>
+            <div style="margin-bottom: 10px;">
+                <button class="btn" onclick="loadConfig()"><%:Refresh%></button>
+                <button class="btn btn-info" onclick="downloadConfig()"><%:Download%></button>
+            </div>
+            <pre id="config-content" style="background:#1a1a1a;color:#0f0;font-family:monospace;font-size:12px;padding:10px;max-height:300px;overflow:auto;border-radius:4px;"><%=config_content or "Click Refresh to load configuration"%></pre>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+function showAddUserForm() {
+    document.getElementById('add-user-form').style.display = 'block';
+    document.getElementById('change-password-form').style.display = 'none';
+    document.getElementById('form-original-username').value = '';
+    document.getElementById('form-username').value = '';
+    document.getElementById('form-password').value = '';
+    document.getElementById('form-password-confirm').value = '';
+    document.getElementById('form-user-type').value = '1';
+    document.getElementById('form-init-channel').value = '';
+    document.getElementById('form-active').checked = true;
+}
+
+function hideUserForm() {
+    document.getElementById('add-user-form').style.display = 'none';
+}
+
+function hidePasswordForm() {
+    document.getElementById('change-password-form').style.display = 'none';
+}
+
+function editUser(username) {
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'get_user', username: username }, function(x, y) {
+        if (y && y.user) {
+            document.getElementById('add-user-form').style.display = 'block';
+            document.getElementById('change-password-form').style.display = 'none';
+            document.getElementById('form-original-username').value = y.user.username;
+            document.getElementById('form-username').value = y.user.username;
+            document.getElementById('form-password').value = '';
+            document.getElementById('form-password').required = false;
+            document.getElementById('form-password-confirm').value = '';
+            document.getElementById('form-password-confirm').required = false;
+            document.getElementById('form-user-type').value = y.user.user_type || '1';
+            document.getElementById('form-init-channel').value = y.user.init_channel || '';
+            document.getElementById('form-active').checked = y.user.active;
+        }
+    });
+}
+
+function changePassword(username) {
+    document.getElementById('change-password-form').style.display = 'block';
+    document.getElementById('add-user-form').style.display = 'none';
+    document.getElementById('password-username').value = username;
+    document.getElementById('password-display-username').innerText = username;
+    document.getElementById('form-new-password').value = '';
+    document.getElementById('form-password-confirm2').value = '';
+}
+
+function saveUser() {
+    var username = document.getElementById('form-username').value;
+    var password = document.getElementById('form-password').value;
+    var passwordConfirm = document.getElementById('form-password-confirm').value;
+    var originalUsername = document.getElementById('form-original-username').value;
+    var userType = document.getElementById('form-user-type').value;
+    var initChannel = document.getElementById('form-init-channel').value;
+    var active = document.getElementById('form-active').checked ? '1' : '0';
+
+    if (originalUsername === '' && password !== passwordConfirm) {
+        alert('<%:Passwords do not match%>');
+        return;
+    }
+
+    if (password && password !== passwordConfirm) {
+        alert('<%:Passwords do not match%>');
+        return;
+    }
+
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', {
+        action: 'save_user',
+        username: username,
+        password: password,
+        original_username: originalUsername,
+        user_type: userType,
+        init_channel: initChannel,
+        active: active
+    }, function(x, y) {
+        alert(y.message || y.error || '<%:User saved%>');
+        if (y.success) {
+            hideUserForm();
+            refreshUsers();
+        }
+    });
+}
+
+function saveNewPassword() {
+    var username = document.getElementById('password-username').value;
+    var newPassword = document.getElementById('form-new-password').value;
+    var passwordConfirm = document.getElementById('form-password-confirm2').value;
+
+    if (newPassword !== passwordConfirm) {
+        alert('<%:Passwords do not match%>');
+        return;
+    }
+
+    if (newPassword.length < 1) {
+        alert('<%:Password cannot be empty%>');
+        return;
+    }
+
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', {
+        action: 'change_password',
+        username: username,
+        password: newPassword
+    }, function(x, y) {
+        alert(y.message || y.error || '<%:Password changed%>');
+        if (y.success) {
+            hidePasswordForm();
+        }
+    });
+}
+
+function deleteUser(username) {
+    if (!confirm('<%:Delete user: %>' + username + '?')) return;
+
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', {
+        action: 'delete_user',
+        username: username
+    }, function(x, y) {
+        alert(y.message || y.error || '<%:User deleted%>');
+        if (y.success) {
+            refreshUsers();
+        }
+    });
+}
+
+function refreshUsers() {
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'get_users' }, function(x, y) {
+        window.location.reload();
+    });
+}
+
+function loadConfig() {
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'get_config_file' }, function(x, y) {
+        if (y && y.content) {
+            document.getElementById('config-content').innerText = y.content;
+        } else {
+            document.getElementById('config-content').innerText = '<%:No configuration found%>';
+        }
+    });
+}
+
+function downloadConfig() {
+    var content = document.getElementById('config-content').innerText;
+    var blob = new Blob([content], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'ttd.json';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function saveAudioSettings() {
+    var codecType = document.getElementById('audio-codec-type').value;
+    var sampleRate = document.getElementById('audio-samplerate').value;
+    var channels = document.getElementById('audio-channels').value;
+    var bitrate = document.getElementById('audio-bitrate').value;
+    var complexity = document.getElementById('audio-complexity').value;
+
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', {
+        action: 'save_audio',
+        codec_type: codecType,
+        samplerate: sampleRate,
+        channels: channels,
+        bitrate: bitrate,
+        complexity: complexity
+    }, function(x, y) {
+        alert(y.message || '<%:Audio settings saved%>');
+    });
+}
+
+window.setTimeout(function() {
+    loadConfig();
+}, 500);
+</script>
+
+<%+footer%>
