@@ -1,0 +1,196 @@
+<%+header%>
+
+<div class="cbi-map">
+    <%:Docker Actions%>
+
+    <div class="cbi-section">
+        <div class="cbi-section-title"><%:Pull Image%></div>
+        <div class="cbi-section-node">
+            <form onsubmit="pullImage(); return false;">
+                <table class="table table-striped">
+                    <tr>
+                        <td width="30%"><%:Docker Image%>:</td>
+                        <td>
+                            <input type="text" id="pull-image-name" value="<%=uci_global.docker_image or "deepcomp/tt5srv:latest"%>" size="50" />
+                        </td>
+                    </tr>
+                </table>
+                <div style="margin-top:10px;">
+                    <button type="submit" class="btn btn-primary"><%:Pull Image%></button>
+                </div>
+            </form>
+            <div id="pull-output" style="background:#1a1a1a;color:#0f0;font-family:monospace;font-size:12px;padding:10px;margin-top:10px;max-height:200px;overflow:auto;border-radius:4px;display:none;">
+            </div>
+        </div>
+    </div>
+
+    <div class="cbi-section">
+        <div class="cbi-section-title"><%:Deploy TeamTalk%></div>
+        <div class="cbi-section-node">
+            <table class="table table-striped">
+                <tr>
+                    <td width="30%"><%:Container Name%>:</td>
+                    <td><%=uci_global.container_name or "tt5srv"%></td>
+                </tr>
+                <tr>
+                    <td><%:Image%>:</td>
+                    <td><%=uci_global.docker_image or "-"%></td>
+                </tr>
+                <tr>
+                    <td><%:Network Mode%>:</td>
+                    <td><%:Host mode (no port mapping)%></td>
+                </tr>
+                <tr>
+                    <td><%:Volume%>:</td>
+                    <td><%=uci_volume.srv_dir or "/mnt/teamtalk/srv"%>:/srv</td>
+                </tr>
+            </table>
+            <div style="margin-top:10px;">
+                <button class="btn btn-success" onclick="deployTeamTalk()"><%:Deploy Container%></button>
+                <button class="btn btn-warning" onclick="startTeamTalk()"><%:Start%></button>
+                <button class="btn btn-warning" onclick="stopTeamTalk()"><%:Stop%></button>
+                <button class="btn btn-danger" onclick="removeTeamTalk()"><%:Remove%></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cbi-section">
+        <div class="cbi-section-title"><%:Docker Images%></div>
+        <div class="cbi-section-node">
+            <table class="table table-striped">
+                <tr>
+                    <th><%:Image Name%></th>
+                    <th><%:Image ID%></th>
+                    <th><%:Actions%></th>
+                </tr>
+                <% for i, img in ipairs(docker_info.images or {}) do %>
+                <tr>
+                    <td><%=img.name%></td>
+                    <td><%=img.id%></td>
+                    <td>
+                        <button class="btn btn-xs btn-danger" onclick="removeImage('<%=img.name%>')"><%:Remove%></button>
+                    </td>
+                </tr>
+                <% end %>
+            </table>
+        </div>
+    </div>
+
+    <div class="cbi-section">
+        <div class="cbi-section-title"><%:Docker Containers%></div>
+        <div class="cbi-section-node">
+            <table class="table table-striped">
+                <tr>
+                    <th><%:Container Name%></th>
+                    <th><%:Image%></th>
+                    <th><%:Status%></th>
+                    <th><%:Actions%></th>
+                </tr>
+                <% for i, c in ipairs(docker_info.containers or {}) do %>
+                <tr>
+                    <td><%=c.name%></td>
+                    <td><%=c.image%></td>
+                    <td><%=c.status%></td>
+                    <td>
+                        <% if c.status:match("Up") then %>
+                            <button class="btn btn-xs btn-warning" onclick="stopContainer('<%=c.name%>')"><%:Stop%></button>
+                        <% else %>
+                            <button class="btn btn-xs btn-success" onclick="startContainer('<%=c.name%>')"><%:Start%></button>
+                        <% end %>
+                        <button class="btn btn-xs btn-info" onclick="restartContainer('<%=c.name%>')"><%:Restart%></button>
+                        <button class="btn btn-xs btn-danger" onclick="removeContainer('<%=c.name%>')"><%:Remove%></button>
+                    </td>
+                </tr>
+                <% end %>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+function pullImage() {
+    var imageName = document.getElementById('pull-image-name').value;
+    var outputDiv = document.getElementById('pull-output');
+    outputDiv.style.display = 'block';
+    outputDiv.innerHTML = '<%:Pulling image...%><br/>';
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>?action=pull&image=' + encodeURIComponent(imageName), true);
+    xhr.onprogress = function(e) {
+        if (e.lengthComputable) {
+            outputDiv.innerHTML = 'Progress: ' + Math.round((e.loaded / e.total) * 100) + '%';
+        }
+    };
+    xhr.onload = function() {
+        outputDiv.innerHTML = xhr.responseText || '<%:Pull completed%>';
+    };
+    xhr.onerror = function() {
+        outputDiv.innerHTML = '<%:Error pulling image%>';
+    };
+    xhr.send();
+}
+
+function deployTeamTalk() {
+    if (!confirm('<%:Deploy TeamTalk container now?%>')) return;
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'deploy' }, function(x, y) {
+        alert(y.message || '<%:Deployment complete%>');
+        window.location.reload();
+    });
+}
+
+function startTeamTalk() {
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'start' }, function(x, y) {
+        alert(y.message || '<%:Started%>');
+        window.location.reload();
+    });
+}
+
+function stopTeamTalk() {
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'stop' }, function(x, y) {
+        alert(y.message || '<%:Stopped%>');
+        window.location.reload();
+    });
+}
+
+function removeTeamTalk() {
+    if (!confirm('<%:Are you sure?%>')) return;
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'remove' }, function(x, y) {
+        alert(y.message || '<%:Removed%>');
+        window.location.reload();
+    });
+}
+
+function startContainer(name) {
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'start_container', name: name }, function(x, y) {
+        window.location.reload();
+    });
+}
+
+function stopContainer(name) {
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'stop_container', name: name }, function(x, y) {
+        window.location.reload();
+    });
+}
+
+function restartContainer(name) {
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'restart_container', name: name }, function(x, y) {
+        window.location.reload();
+    });
+}
+
+function removeContainer(name) {
+    if (!confirm('<%:Remove container: %>' + name + '?')) return;
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'remove_container', name: name }, function(x, y) {
+        window.location.reload();
+    });
+}
+
+function removeImage(name) {
+    if (!confirm('<%:Remove image: %>' + name + '?')) return;
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'remove_image', name: name }, function(x, y) {
+        window.location.reload();
+    });
+}
+</script>
+
+<%+footer%>

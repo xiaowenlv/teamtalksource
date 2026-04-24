@@ -1,0 +1,406 @@
+<%+header%>
+
+<div class="cbi-map">
+    <%:TeamTalk Configuration%>
+
+    <form method="post" name="teamtalk_config" action="<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>">
+        <input type="hidden" name="action" value="save_config" />
+
+        <div class="cbi-section">
+            <div class="cbi-section-title"><%:Basic Settings%></div>
+            <div class="cbi-section-node">
+                <table class="table table-striped">
+                    <tr>
+                        <td width="30%"><%:Enable TeamTalk%>:</td>
+                        <td>
+                            <input type="checkbox" name="enabled" value="1" <% if uci_global.enabled == "1" then %>checked<% end %> />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Docker Image%>:</td>
+                        <td>
+                            <input type="text" name="docker_image" value="<%=uci_global.docker_image or "deepcomp/tt5srv:latest"%>" size="40" />
+                            <small><%:Example: deepcomp/tt5srv:latest%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Container Name%>:</td>
+                        <td>
+                            <input type="text" name="container_name" value="<%=uci_global.container_name or "tt5srv"%>" size="30" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Architecture%>:</td>
+                        <td>
+                            <select name="arch">
+                                <option value="amd64" <% if uci_global.arch == "amd64" then %>selected<% end %>>AMD64 (x86_64)</option>
+                                <option value="arm64" <% if uci_global.arch == "arm64" then %>selected<% end %>>ARM64</option>
+                                <option value="armhf" <% if uci_global.arch == "armhf" then %>selected<% end %>>ARMHF (ARMv7)</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="cbi-section">
+            <div class="cbi-section-title"><%:Server Settings%></div>
+            <div class="cbi-section-node">
+                <table class="table table-striped">
+                    <tr>
+                        <td width="30%"><%:Server Name%>:</td>
+                        <td>
+                            <input type="text" name="server_name" value="<%=uci_server.server_name or "TeamTalk Server"%>" size="40" />
+                            <small><%:Display name of your server%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:MOTD (Message of the Day)%>:</td>
+                        <td>
+                            <input type="text" name="motd" value="<%=uci_server.motd or "Welcome to TeamTalk Server"%>" size="50" />
+                            <small><%:Message shown when users login%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Max Users%>:</td>
+                        <td>
+                            <input type="text" name="max_users" value="<%=uci_server.max_users or "1000"%>" size="10" />
+                            <small><%:Maximum number of concurrent users%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:User Timeout (seconds)%>:</td>
+                        <td>
+                            <input type="text" name="user_timeout" value="<%=uci_server.user_timeout or "60"%>" size="10" />
+                            <small><%:Idle user disconnect timeout%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Auto Save%>:</td>
+                        <td>
+                            <input type="checkbox" name="auto_save" value="1" <% if uci_server.auto_save == "1" then %>checked<% end %> />
+                            <small><%:Automatically save configuration changes%></small>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="cbi-section">
+            <div class="cbi-section-title"><%:Login Restrictions%></div>
+            <div class="cbi-section-node">
+                <table class="table table-striped">
+                    <tr>
+                        <td width="30%"><%:Login Attempts (0=unlimited)%>:</td>
+                        <td>
+                            <input type="text" name="login_attempts" value="<%=uci_login.login_attempts or "0"%>" size="10" />
+                            <small><%:Max failed login attempts (0=unlimited)%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Max Logins Per IP (0=unlimited)%>:</td>
+                        <td>
+                            <input type="text" name="max_logins_per_ip" value="<%=uci_login.max_logins_per_ip or "0"%>" size="10" />
+                            <small><%:Maximum logins from same IP address%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Login Delay (msec)%>:</td>
+                        <td>
+                            <input type="text" name="login_delay_msec" value="<%=uci_login.login_delay_msec or "0"%>" size="10" />
+                            <small><%:Delay between login attempts in milliseconds%></small>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="cbi-section">
+            <div class="cbi-section-title"><%:Port Settings%></div>
+            <div class="cbi-section-node">
+                <table class="table table-striped">
+                    <tr>
+                        <td width="30%"><%:TCP Port%>:</td>
+                        <td>
+                            <input type="text" name="tcp_port" value="<%=uci_ports.tcp_port or "10333"%>" size="10" />
+                            <small><%:TeamTalk TCP server port%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:UDP Port%>:</td>
+                        <td>
+                            <input type="text" name="udp_port" value="<%=uci_ports.udp_port or "10333"%>" size="10" />
+                            <small><%:TeamTalk UDP server port (voice)%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Enable HTTP%>:</td>
+                        <td>
+                            <input type="checkbox" name="http_enabled" value="1" <% if uci_ports.http_enabled == "1" then %>checked<% end %> />
+                            <small><%:Enable HTTP administration interface%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:HTTP Port%>:</td>
+                        <td>
+                            <input type="text" name="http_port" value="<%=uci_ports.http_port or "10334"%>" size="10" />
+                            <small><%:HTTP administration port%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Check Port Availability%>:</td>
+                        <td>
+                            <button type="button" class="btn" onclick="checkPorts()"><%:Check Now%></button>
+                            <span id="port-check-result"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Auto Find Available Port%>:</td>
+                        <td>
+                            <button type="button" class="btn" onclick="findAvailablePort()"><%:Find Available Port%></button>
+                            <span id="port-suggestion"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="cbi-section">
+            <div class="cbi-section-title"><%:File Storage Settings%></div>
+            <div class="cbi-section-node">
+                <table class="table table-striped">
+                    <tr>
+                        <td width="30%"><%:Files Root Directory%>:</td>
+                        <td>
+                            <input type="text" name="files_root" value="<%=uci_storage.files_root or "/mnt/teamtalk/srv/files"%>" size="50" />
+                            <small><%:Root directory for file storage%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Max Disk Usage (MB, 0=unlimited)%>:</td>
+                        <td>
+                            <input type="text" name="max_diskusage" value="<%=uci_storage.max_diskusage or "0"%>" size="10" />
+                            <small><%:Maximum disk space for file storage (0=unlimited)%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Channel Disk Quota (MB, 0=unlimited)%>:</td>
+                        <td>
+                            <input type="text" name="channel_diskquota" value="<%=uci_storage.channel_diskquota or "0"%>" size="10" />
+                            <small><%:Disk quota per channel (0=unlimited)%></small>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="cbi-section">
+            <div class="cbi-section-title"><%:System Settings%></div>
+            <div class="cbi-section-node">
+                <table class="table table-striped">
+                    <tr>
+                        <td width="30%"><%:Timezone%>:</td>
+                        <td>
+                            <input type="text" name="timezone" value="<%=uci_settings.timezone or "Asia/Shanghai"%>" size="30" />
+                            <small><%:Example: Asia/Shanghai, Europe/Budapest%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:File Owner UID (PUID)%>:</td>
+                        <td>
+                            <input type="text" name="puid" value="<%=uci_settings.puid or "1000"%>" size="10" />
+                            <small><%:UID of the files owner user%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:File Owner GID (PGID)%>:</td>
+                        <td>
+                            <input type="text" name="pgid" value="<%=uci_settings.pgid or "1000"%>" size="10" />
+                            <small><%:GID of the files owner group%></small>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="cbi-section">
+            <div class="cbi-section-title"><%:Storage Paths%></div>
+            <div class="cbi-section-node">
+                <table class="table table-striped">
+                    <tr>
+                        <td width="30%"><%:SRV Directory%>:</td>
+                        <td>
+                            <input type="text" name="srv_dir" value="<%=uci_volume.srv_dir or "/mnt/teamtalk/srv"%>" size="50" />
+                            <small><%:TeamTalk configuration directory (ttd.json is here)%></small>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="cbi-section">
+            <div class="cbi-section-title"><%:Audio Codec Settings (Default for Channels)%></div>
+            <div class="cbi-section-node">
+                <table class="table table-striped">
+                    <tr>
+                        <td width="30%"><%:Codec Type%>:</td>
+                        <td>
+                            <select name="audio_codec_type" id="form-audio-codec-type">
+                                <option value="0" <% if uci_audio.codec_type == "0" then %>selected<% end %>>Speex</option>
+                                <option value="1" <% if uci_audio.codec_type == "1" then %>selected<% end %>>CELT</option>
+                                <option value="2" <% if uci_audio.codec_type == "2" then %>selected<% end %>>MP3</option>
+                                <option value="3" <% if uci_audio.codec_type == "3" or not uci_audio.codec_type then %>selected<% end %>>Opus</option>
+                                <option value="4" <% if uci_audio.codec_type == "4" then %>selected<% end %>>Speex VBR</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Sample Rate%>:</td>
+                        <td>
+                            <select name="audio_samplerate" id="form-audio-samplerate">
+                                <option value="8000" <% if uci_audio.samplerate == "8000" then %>selected<% end %>>8000 Hz</option>
+                                <option value="16000" <% if uci_audio.samplerate == "16000" then %>selected<% end %>>16000 Hz</option>
+                                <option value="32000" <% if uci_audio.samplerate == "32000" then %>selected<% end %>>32000 Hz</option>
+                                <option value="48000" <% if uci_audio.samplerate == "48000" or not uci_audio.samplerate then %>selected<% end %>>48000 Hz</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Channels%>:</td>
+                        <td>
+                            <select name="audio_channels" id="form-audio-channels">
+                                <option value="1" <% if uci_audio.channels == "1" then %>selected<% end %>>Mono</option>
+                                <option value="2" <% if uci_audio.channels == "2" or not uci_audio.channels then %>selected<% end %>>Stereo</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Bitrate%>:</td>
+                        <td>
+                            <select name="audio_bitrate" id="form-audio-bitrate">
+                                <option value="32000" <% if uci_audio.bitrate == "32000" then %>selected<% end %>>32 Kbps</option>
+                                <option value="64000" <% if uci_audio.bitrate == "64000" then %>selected<% end %>>64 Kbps</option>
+                                <option value="128000" <% if uci_audio.bitrate == "128000" or not uci_audio.bitrate then %>selected<% end %>>128 Kbps</option>
+                                <option value="256000" <% if uci_audio.bitrate == "256000" then %>selected<% end %>>256 Kbps</option>
+                                <option value="512000" <% if uci_audio.bitrate == "512000" then %>selected<% end %>>512 Kbps</option>
+                            </select>
+                            <small><%:Recommended: 128 Kbps for good quality%></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><%:Complexity%>:</td>
+                        <td>
+                            <select name="audio_complexity" id="form-audio-complexity">
+                                <option value="5" <% if uci_audio.complexity == "5" then %>selected<% end %>>5 (Fast)</option>
+                                <option value="10" <% if uci_audio.complexity == "10" or not uci_audio.complexity then %>selected<% end %>>10 (High Quality)</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="cbi-section">
+            <div class="cbi-section-node">
+                <input type="submit" class="btn btn-primary" value="<%:Save Configuration%>" />
+                <input type="reset" class="btn" value="<%:Reset%>" />
+            </div>
+        </div>
+    </form>
+
+    <div class="cbi-section">
+        <div class="cbi-section-title"><%:Setup Wizard%></div>
+        <div class="cbi-section-node">
+            <p><%:Run the setup wizard to create a new TeamTalk server configuration interactively.%></p>
+            <button class="btn btn-warning" onclick="runSetupWizard()"><%:Run Setup Wizard%></button>
+            <small><%:Note: Setup wizard will overwrite existing configuration.%></small>
+        </div>
+    </div>
+
+    <div class="cbi-section">
+        <div class="cbi-section-title"><%:Import Configuration%></div>
+        <div class="cbi-section-node">
+            <p><%:Import an existing TeamTalk configuration file (ttd.json).%></p>
+            <input type="file" id="config-file" accept=".json" />
+            <button class="btn btn-info" onclick="importConfig()"><%:Import%></button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+function checkPorts() {
+    var tcpPort = document.querySelector('input[name="tcp_port"]').value;
+    var udpPort = document.querySelector('input[name="udp_port"]').value;
+    var httpPort = document.querySelector('input[name="http_port"]').value;
+    var httpEnabled = document.querySelector('input[name="http_enabled"]').checked ? '1' : '0';
+    
+    document.getElementById('port-check-result').innerHTML = '<span style="color:blue;">Checking...</span>';
+    
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { 
+        action: 'check_ports', 
+        tcp_port: tcpPort, 
+        udp_port: udpPort, 
+        http_port: httpPort,
+        http_enabled: httpEnabled
+    }, function(x, y) {
+        if (y && y.conflicts && y.conflicts.length > 0) {
+            document.getElementById('port-check-result').innerHTML = '<span style="color:red;">' + y.conflicts.join('<br>') + '</span>';
+        } else {
+            document.getElementById('port-check-result').innerHTML = '<span style="color:green;">All ports are available</span>';
+        }
+    });
+}
+
+function findAvailablePort() {
+    var tcpPort = document.querySelector('input[name="tcp_port"]').value;
+    
+    document.getElementById('port-suggestion').innerHTML = '<span style="color:blue;">Searching...</span>';
+    
+    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { 
+        action: 'find_port', 
+        start_port: tcpPort
+    }, function(x, y) {
+        if (y && y.port) {
+            document.getElementById('port-suggestion').innerHTML = '<span style="color:green;">Suggested: ' + y.port + '</span>';
+            if (confirm('Change TCP/UDP port to ' + y.port + '?')) {
+                document.querySelector('input[name="tcp_port"]').value = y.port;
+                document.querySelector('input[name="udp_port"]').value = y.port;
+            }
+        } else {
+            document.getElementById('port-suggestion').innerHTML = '<span style="color:red;">No available port found</span>';
+        }
+    });
+}
+
+function runSetupWizard() {
+    if (confirm('<%:Run setup wizard? This will configure your TeamTalk server.%>')) {
+        XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'setup_wizard' }, function(x, y) {
+            alert(y.message || y.output || 'Setup completed');
+        });
+    }
+}
+
+function importConfig() {
+    var fileInput = document.getElementById('config-file');
+    var file = fileInput.files[0];
+    if (!file) {
+        alert('Please select a configuration file');
+        return;
+    }
+    
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var content = e.target.result;
+        XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { 
+            action: 'import_config', 
+            content: encodeURIComponent(content)
+        }, function(x, y) {
+            alert(y.message || 'Configuration imported');
+            window.location.reload();
+        });
+    };
+    reader.readAsText(file);
+}
+</script>
+
+<%+footer%>

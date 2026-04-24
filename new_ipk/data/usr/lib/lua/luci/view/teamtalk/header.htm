@@ -1,0 +1,19 @@
+<div class="cbi-map">
+    <div class="cbi-section">
+        <div class="panel-heading">
+            <%:TeamTalk Server%>
+        </div>
+        <div class="panel-body">
+            <div class="cbi-section-node">
+                <div class="table" id="teamtalk-nav">
+                    <ul class="nav-tabs">
+                        <li class="active"><a href="<%=luci.dispatcher.build_url("admin/services/teamtalk/status")%>"><%:Status%></a></li>
+                        <li><a href="<%=luci.dispatcher.build_url("admin/services/teamtalk/config")%>"><%:Configuration%></a></li>
+                        <li><a href="<%=luci.dispatcher.build_url("admin/services/teamtalk/users")%>"><%:Users%></a></li>
+                        <li><a href="<%=luci.dispatcher.build_url("admin/services/teamtalk/logs")%>"><%:Logs%></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

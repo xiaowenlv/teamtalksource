@@ -1,0 +1,44 @@
+config teamtalk 'global'
+    option enabled '0'
+    option docker_image 'deepcomp/tt5srv:latest'
+    option container_name 'tt5srv'
+    option arch 'amd64'
+
+config settings
+    option timezone 'Asia/Shanghai'
+    option puid '1000'
+    option pgid '1000'
+
+config server
+    option server_name 'TeamTalk Server'
+    option motd 'Welcome to TeamTalk Server'
+    option max_users '1000'
+    option user_timeout '60'
+    option auto_save '1'
+
+config login
+    option login_attempts '0'
+    option max_logins_per_ip '0'
+    option login_delay_msec '0'
+
+config ports
+    option tcp_port '10333'
+    option udp_port '10333'
+    option http_port '10334'
+    option http_enabled '0'
+
+config storage
+    option files_root '/mnt/teamtalk/srv/files'
+    option max_diskusage '0'
+    option channel_diskquota '0'
+
+config audio
+    option codec_type '3'
+    option samplerate '48000'
+    option channels '2'
+    option bitrate '128000'
+    option complexity '10'
+
+config volume
+    option srv_dir '/mnt/teamtalk/srv'
+    option files_dir '/mnt/teamtalk/srv/files'

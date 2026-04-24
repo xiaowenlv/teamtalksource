@@ -1,0 +1,563 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "TeamTalk"
+msgstr "TeamTalk"
+
+msgid "TeamTalk Server"
+msgstr "TeamTalk Server"
+
+msgid "TeamTalk Status"
+msgstr "TeamTalk Status"
+
+msgid "TeamTalk Configuration"
+msgstr "TeamTalk Configuration"
+
+msgid "TeamTalk Logs"
+msgstr "TeamTalk Logs"
+
+msgid "Docker Actions"
+msgstr "Docker Actions"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Configuration"
+msgstr "Configuration"
+
+msgid "Users"
+msgstr "Users"
+
+msgid "Logs"
+msgstr "Logs"
+
+msgid "Basic Settings"
+msgstr "Basic Settings"
+
+msgid "Network Ports"
+msgstr "Network Ports"
+
+msgid "Database Settings"
+msgstr "Database Settings"
+
+msgid "Storage Paths"
+msgstr "Storage Paths"
+
+msgid "User List"
+msgstr "User List"
+
+msgid "User Details"
+msgstr "User Details"
+
+msgid "Edit User"
+msgstr "Edit User"
+
+msgid "User ID"
+msgstr "User ID"
+
+msgid "Nickname"
+msgstr "Nickname"
+
+msgid "Gender"
+msgstr "Gender"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Created Time"
+msgstr "Created Time"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "View"
+msgstr "View"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Reset"
+msgstr "Reset"
+
+msgid "Add User"
+msgstr "Add User"
+
+msgid "Refresh"
+msgstr "Refresh"
+
+msgid "Save Configuration"
+msgstr "Save Configuration"
+
+msgid "Enable TeamTalk"
+msgstr "Enable TeamTalk"
+
+msgid "Docker Image"
+msgstr "Docker Image"
+
+msgid "Container Name"
+msgstr "Container Name"
+
+msgid "HTTP/Login Port"
+msgstr "HTTP/Login Port"
+
+msgid "Message Port"
+msgstr "Message Port"
+
+msgid "Route Port"
+msgstr "Route Port"
+
+msgid "File Server Port"
+msgstr "File Server Port"
+
+msgid "MSFS Port"
+msgstr "MSFS Port"
+
+msgid "DB Proxy Port"
+msgstr "DB Proxy Port"
+
+msgid "MySQL Port"
+msgstr "MySQL Port"
+
+msgid "MySQL Root Password"
+msgstr "MySQL Root Password"
+
+msgid "Database Name"
+msgstr "Database Name"
+
+msgid "Database User"
+msgstr "Database User"
+
+msgid "Database Password"
+msgstr "Database Password"
+
+msgid "Redis Port"
+msgstr "Redis Port"
+
+msgid "Data Directory"
+msgstr "Data Directory"
+
+msgid "Log Directory"
+msgstr "Log Directory"
+
+msgid "Quick Actions"
+msgstr "Quick Actions"
+
+msgid "Start TeamTalk"
+msgstr "Start TeamTalk"
+
+msgid "Stop TeamTalk"
+msgstr "Stop TeamTalk"
+
+msgid "Restart"
+msgstr "Restart"
+
+msgid "Remove Container"
+msgstr "Remove Container"
+
+msgid "Install Docker"
+msgstr "Install Docker"
+
+msgid "Docker Status"
+msgstr "Docker Status"
+
+msgid "Docker Version"
+msgstr "Docker Version"
+
+msgid "TeamTalk Image"
+msgstr "TeamTalk Image"
+
+msgid "Container Status"
+msgstr "Container Status"
+
+msgid "Service Status"
+msgstr "Service Status"
+
+msgid "Service"
+msgstr "Service"
+
+msgid "Port"
+msgstr "Port"
+
+msgid "Container Info"
+msgstr "Container Info"
+
+msgid "Pull Image"
+msgstr "Pull Image"
+
+msgid "Deploy Container"
+msgstr "Deploy Container"
+
+msgid "Deploy TeamTalk"
+msgstr "Deploy TeamTalk"
+
+msgid "Start"
+msgstr "Start"
+
+msgid "Stop"
+msgstr "Stop"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Docker Images"
+msgstr "Docker Images"
+
+msgid "Docker Containers"
+msgstr "Docker Containers"
+
+msgid "Image Name"
+msgstr "Image Name"
+
+msgid "Image ID"
+msgstr "Image ID"
+
+msgid "Log Lines"
+msgstr "Log Lines"
+
+msgid "Auto Refresh"
+msgstr "Auto Refresh"
+
+msgid "Refresh Logs"
+msgstr "Refresh Logs"
+
+msgid "Clear Display"
+msgstr "Clear Display"
+
+msgid "Download Logs"
+msgstr "Download Logs"
+
+msgid "System Logs"
+msgstr "System Logs"
+
+msgid "Refresh Syslog"
+msgstr "Refresh Syslog"
+
+msgid "Example:"
+msgstr "Example:"
+
+msgid "Leave empty to keep"
+msgstr "Leave empty to keep current"
+
+msgid "Male"
+msgstr "Male"
+
+msgid "Female"
+msgstr "Female"
+
+msgid "Unknown"
+msgstr "Unknown"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Inactive"
+msgstr "Inactive"
+
+msgid "Running"
+msgstr "Running"
+
+msgid "Stopped"
+msgstr "Stopped"
+
+msgid "Installed"
+msgstr "Installed"
+
+msgid "Not Installed"
+msgstr "Not Installed"
+
+msgid "Are you sure you want to remove the container?"
+msgstr "Are you sure you want to remove the container?"
+
+msgid "Are you sure?"
+msgstr "Are you sure?"
+
+msgid "Remove container:"
+msgstr "Remove container:"
+
+msgid "Remove image:"
+msgstr "Remove image:"
+
+msgid "Deploy TeamTalk container now?"
+msgstr "Deploy TeamTalk container now?"
+
+msgid "Pulling image..."
+msgstr "Pulling image..."
+
+msgid "Pull completed"
+msgstr "Pull completed"
+
+msgid "Error pulling image"
+msgstr "Error pulling image"
+
+msgid "Deployment complete"
+msgstr "Deployment complete"
+
+msgid "Started"
+msgstr "Started"
+
+msgid "Stopped"
+msgstr "Stopped"
+
+msgid "Removed"
+msgstr "Removed"
+
+msgid "Log display cleared"
+msgstr "Log display cleared"
+
+msgid "No logs available"
+msgstr "No logs available"
+
+msgid "No system logs"
+msgstr "No system logs"
+
+msgid "User Management"
+msgstr "User Management"
+
+msgid "User List"
+msgstr "User List"
+
+msgid "Add User"
+msgstr "Add User"
+
+msgid "Edit User"
+msgstr "Edit User"
+
+msgid "Delete User"
+msgstr "Delete User"
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Confirm Password"
+msgstr "Confirm Password"
+
+msgid "Account Type"
+msgstr "Account Type"
+
+msgid "Admin"
+msgstr "Admin"
+
+msgid "Admin (Administrator)"
+msgstr "Admin (Administrator)"
+
+msgid "User"
+msgstr "User"
+
+msgid "User (Normal)"
+msgstr "User (Normal)"
+
+msgid "Guest"
+msgstr "Guest"
+
+msgid "Rights"
+msgstr "Rights"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Inactive"
+msgstr "Inactive"
+
+msgid "Last Modified"
+msgstr "Last Modified"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Passwords do not match"
+msgstr "Passwords do not match"
+
+msgid "Password cannot be empty"
+msgstr "Password cannot be empty"
+
+msgid "User saved"
+msgstr "User saved"
+
+msgid "Password changed"
+msgstr "Password changed"
+
+msgid "User deleted"
+msgstr "User deleted"
+
+msgid "User saved successfully"
+msgstr "User saved successfully"
+
+msgid "Password changed successfully"
+msgstr "Password changed successfully"
+
+msgid "User deleted successfully"
+msgstr "User deleted successfully"
+
+msgid "Delete user:"
+msgstr "Delete user:"
+
+msgid "No configuration found"
+msgstr "No configuration found"
+
+msgid "Audio Codec Settings"
+msgstr "Audio Codec Settings"
+
+msgid "Audio Codec Settings (Default for Channels)"
+msgstr "Audio Codec Settings (Default for Channels)"
+
+msgid "Codec Type"
+msgstr "Codec Type"
+
+msgid "Sample Rate"
+msgstr "Sample Rate"
+
+msgid "Channels"
+msgstr "Channels"
+
+msgid "Bitrate"
+msgstr "Bitrate"
+
+msgid "Complexity"
+msgstr "Complexity"
+
+msgid "Recommended: 128 Kbps for good quality"
+msgstr "Recommended: 128 Kbps for good quality"
+
+msgid "Save Audio Settings"
+msgstr "Save Audio Settings"
+
+msgid "Audio settings saved"
+msgstr "Audio settings saved"
+
+msgid "Initial Channel"
+msgstr "Initial Channel"
+
+msgid "Leave empty for no channel"
+msgstr "Leave empty for no channel"
+
+msgid "Add New User"
+msgstr "Add New User"
+
+msgid "Change Password"
+msgstr "Change Password"
+
+msgid "New Password"
+msgstr "New Password"
+
+msgid "Configuration File"
+msgstr "Configuration File"
+
+msgid "Server Name"
+msgstr "Server Name"
+
+msgid "Max Users"
+msgstr "Max Users"
+
+msgid "User Timeout"
+msgstr "User Timeout"
+
+msgid "User Timeout (seconds)"
+msgstr "User Timeout (seconds)"
+
+msgid "Auto Save"
+msgstr "Auto Save"
+
+msgid "Automatically save configuration changes"
+msgstr "Automatically save configuration changes"
+
+msgid "Login Restrictions"
+msgstr "Login Restrictions"
+
+msgid "Login Attempts (0=unlimited)"
+msgstr "Login Attempts (0=unlimited)"
+
+msgid "Max Logins Per IP (0=unlimited)"
+msgstr "Max Logins Per IP (0=unlimited)"
+
+msgid "Login Delay (msec)"
+msgstr "Login Delay (msec)"
+
+msgid "Max failed login attempts (0=unlimited)"
+msgstr "Max failed login attempts (0=unlimited)"
+
+msgid "Maximum logins from same IP address"
+msgstr "Maximum logins from same IP address"
+
+msgid "Delay between login attempts in milliseconds"
+msgstr "Delay between login attempts in milliseconds"
+
+msgid "File Storage Settings"
+msgstr "File Storage Settings"
+
+msgid "Files Root Directory"
+msgstr "Files Root Directory"
+
+msgid "Max Disk Usage (MB, 0=unlimited)"
+msgstr "Max Disk Usage (MB, 0=unlimited)"
+
+msgid "Channel Disk Quota (MB, 0=unlimited)"
+msgstr "Channel Disk Quota (MB, 0=unlimited)"
+
+msgid "Maximum disk space for file storage (0=unlimited)"
+msgstr "Maximum disk space for file storage (0=unlimited)"
+
+msgid "Disk quota per channel (0=unlimited)"
+msgstr "Disk quota per channel (0=unlimited)"
+
+msgid "System Settings"
+msgstr "System Settings"
+
+msgid "Storage Paths"
+msgstr "Storage Paths"
+
+msgid "Display name of your server"
+msgstr "Display name of your server"
+
+msgid "Message shown when users login"
+msgstr "Message shown when users login"
+
+msgid "Maximum number of concurrent users"
+msgstr "Maximum number of concurrent users"
+
+msgid "Idle user disconnect timeout"
+msgstr "Idle user disconnect timeout"
+
+msgid "Run the setup wizard to create a new TeamTalk server configuration interactively."
+msgstr "Run the setup wizard to create a new TeamTalk server configuration interactively."
+
+msgid "Import an existing TeamTalk configuration file (ttd.json)."
+msgstr "Import an existing TeamTalk configuration file (ttd.json)."
+
+msgid "Note: Setup wizard will overwrite existing configuration."
+msgstr "Note: Setup wizard will overwrite existing configuration."
+
+msgid "Import Configuration"
+msgstr "Import Configuration"
+
+msgid "Import"
+msgstr "Import"
+
+msgid "Configuration imported"
+msgstr "Configuration imported"
+
+msgid "Root directory for file storage"
+msgstr "Root directory for file storage"
+
+msgid "File Storage"
+msgstr "File Storage"

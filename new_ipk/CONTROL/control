@@ -1,0 +1,7 @@
+Package: luci-app-teamtalk
+Version: 1.0.0-1
+Architecture: all
+Maintainer: TeamTalk
+Section: net
+Depends: +luci-base +luci-compat
+Description: TeamTalk Server Manager for LuCI

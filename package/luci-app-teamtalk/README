@@ -1,0 +1,11 @@
+This package directory contains the OpenWrt LuCI packaging metadata for luci-app-teamtalk.
+
+Usage:
+  - Place this directory inside an OpenWrt build root under package/luci-app-teamtalk.
+  - Build with the OpenWrt build system, which will compile PO translations from po/ into LMO language packages.
+
+Language handling:
+  - `LUCIPKG_LANG:=en zh-cn` tells the build system to generate separate luci-i18n-teamtalk-en and luci-i18n-teamtalk-zh-cn packages.
+  - Do not install the same translation files in both the main package and the i18n packages, or opkg will report file conflicts.
+
+If you want to ship translations only inside the main package, remove the separate language package generation and install compiled `.lmo` files directly under usr/lib/lua/luci/i18n/.
