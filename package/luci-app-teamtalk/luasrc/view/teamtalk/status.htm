@@ -1,243 +1,37 @@
 <%+header%>
+<%
+local sys = require "luci.sys"
+local uci = require "luci.model.uci".cursor()
+local name = uci:get("teamtalk", "global", "container_name") or "tt5srv"
+local image = uci:get("teamtalk", "global", "docker_image") or "deepcomp/tt5srv:latest"
+local arch = uci:get("teamtalk", "global", "arch") or "amd64"
+local srv_dir = uci:get("teamtalk", "volume", "srv_dir") or "/mnt/teamtalk/srv"
+local docker_installed = sys.exec("command -v docker >/dev/null 2>&1 && echo 1 || echo 0"):match("1") ~= nil
+local docker_running = sys.exec("docker info >/dev/null 2>&1 && echo 1 || echo 0"):match("1") ~= nil
+local container_status = sys.exec(string.format("docker ps -a --filter 'name=%s' --format '{{.Status}}' 2>/dev/null", name)):gsub("[\r\n]+", "")
+if container_status == "" then container_status = "not installed" end
+%>
 
 <div class="cbi-map">
-    <%:TeamTalk Status%>
-
+    <h2><%:TeamTalk Status%></h2>
     <div class="cbi-section">
         <div class="cbi-section-node">
-            <div class="table" id="docker-status-table">
-                <table class="table">
-                    <tr>
-                        <td width="30%"><%:Docker Status%>:</td>
-                        <td id="docker-status-value">
-                            <span class="label <% if docker_info.installed and docker_info.running then %>label-success<% else %>label-danger<% end %>">
-                                <%=docker_info.installed and docker_info.running and "Running" or (docker_info.installed and "Installed" or "Not Installed")%>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><%:Docker Version%>:</td>
-                        <td><%=docker_info.version or "-"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:TeamTalk Image%>:</td>
-                        <td><%=uci_global.docker_image or "deepcomp/tt5srv:latest"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:Container Status%>:</td>
-                        <td id="container-status-value">
-                            <span class="label <% if container_status == "running" then %>label-success<% else %>label-warning<% end %>">
-                                <%=container_status or "stopped"%>
-                            </span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <table class="table table-striped">
+                <tr><td width="30%"><%:Docker Installed%></td><td><%= docker_installed and "Yes" or "No" %></td></tr>
+                <tr><td><%:Docker Running%></td><td><%= docker_running and "Yes" or "No" %></td></tr>
+                <tr><td><%:Container Name%></td><td><%= name %></td></tr>
+                <tr><td><%:Container Status%></td><td><%= container_status %></td></tr>
+                <tr><td><%:Docker Image%></td><td><%= image %></td></tr>
+                <tr><td><%:Architecture%></td><td><%= arch %></td></tr>
+                <tr><td><%:SRV Directory%></td><td><%= srv_dir %></td></tr>
+            </table>
         </div>
     </div>
-
     <div class="cbi-section">
-        <div class="cbi-section-title"><%:Quick Actions%></div>
         <div class="cbi-section-node">
-            <div class="table" id="quick-actions">
-                <table class="table">
-                    <tr>
-                        <td>
-                            <% if docker_info.installed and docker_info.running then %>
-                                <% if container_status ~= "running" then %>
-                                    <button class="btn btn-success" onclick="startTeamTalk()"><%:Start%></button>
-                                    <button class="btn btn-primary" onclick="setupWizard()"><%:Setup Wizard%></button>
-                                <% else %>
-                                    <button class="btn btn-warning" onclick="stopTeamTalk()"><%:Stop%></button>
-                                    <button class="btn btn-info" onclick="restartTeamTalk()"><%:Restart%></button>
-                                <% end %>
-                                <button class="btn btn-danger" onclick="removeTeamTalk()"><%:Remove Container%></button>
-                            <% else %>
-                                <button class="btn btn-primary" onclick="installDocker()"><%:Install Docker%></button>
-                            <% end %>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <p><%:This page shows current runtime status only. Configuration changes should be made on the Configuration page.%></p>
         </div>
     </div>
-
-    <div class="cbi-section">
-        <div class="cbi-section-title"><%:Server Information%></div>
-        <div class="cbi-section-node">
-            <div class="table" id="server-info">
-                <table class="table table-striped">
-                    <tr>
-                        <td width="30%"><%:Container Name%>:</td>
-                        <td><%=uci_global.container_name or "tt5srv"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:Image%>:</td>
-                        <td><%=uci_global.docker_image or "-"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:Architecture%>:</td>
-                        <td><%=uci_global.arch or "amd64"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:Network Mode%>:</td>
-                        <td><%:Host (network_mode: host)%></td>
-                    </tr>
-                    <tr>
-                        <td><%:SRV Directory%>:</td>
-                        <td><%=uci_volume.srv_dir or "/mnt/teamtalk/srv"%></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="cbi-section">
-        <div class="cbi-section-title"><%:Server Information%></div>
-        <div class="cbi-section-node">
-            <div class="table" id="server-info">
-                <table class="table table-striped">
-                    <tr>
-                        <td width="30%"><%:Server Name%>:</td>
-                        <td><%=uci_server.server_name or "TeamTalk Server"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:MOTD%>:</td>
-                        <td><%=uci_server.motd or "-"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:Max Users%>:</td>
-                        <td><%=uci_server.max_users or "1000"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:User Timeout%>:</td>
-                        <td><%=uci_server.user_timeout or "60"%> seconds</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="cbi-section">
-        <div class="cbi-section-title"><%:Port Configuration%></div>
-        <div class="cbi-section-node">
-            <div class="table" id="port-info">
-                <table class="table table-striped">
-                    <tr>
-                        <td width="30%"><%:TCP Port%>:</td>
-                        <td><%=uci_ports.tcp_port or "10333"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:UDP Port%>:</td>
-                        <td><%=uci_ports.udp_port or "10333"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:HTTP Enabled%>:</td>
-                        <td><%=uci_ports.http_enabled == "1" and "Yes" or "No"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:HTTP Port%>:</td>
-                        <td><%=uci_ports.http_port or "10334"%></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="cbi-section">
-        <div class="cbi-section-title"><%:Storage Settings%></div>
-        <div class="cbi-section-node">
-            <div class="table" id="storage-info">
-                <table class="table table-striped">
-                    <tr>
-                        <td width="30%"><%:Files Root%>:</td>
-                        <td><%=uci_storage.files_root or "/mnt/teamtalk/srv/files"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:Max Disk Usage%>:</td>
-                        <td><%=uci_storage.max_diskusage or "0"%> MB</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="cbi-section">
-        <div class="cbi-section-title"><%:System Settings%></div>
-        <div class="cbi-section-node">
-            <div class="table" id="system-info">
-                <table class="table table-striped">
-                    <tr>
-                        <td width="30%"><%:Timezone%>:</td>
-                        <td><%=uci_settings.timezone or "Asia/Shanghai"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:File Owner (PUID/PGID)%>:</td>
-                        <td><%=uci_settings.puid or "1000"%> / <%=uci_settings.pgid or "1000"%></td>
-                    </tr>
-                    <tr>
-                        <td><%:SRV Directory%>:</td>
-                        <td><%=uci_volume.srv_dir or "/mnt/teamtalk/srv"%></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <% if server_info and server_info.running then %>
-    <div class="cbi-section">
-        <div class="cbi-section-title"><%:Server Version%></div>
-        <div class="cbi-section-node">
-            <pre style="background:#1a1a1a;color:#0f0;font-family:monospace;font-size:12px;padding:10px;max-height:200px;overflow:auto;"><%=server_info.version or "-"%></pre>
-        </div>
-    </div>
-    <% end %>
 </div>
-
-<script type="text/javascript">
-function startTeamTalk() {
-    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'start' }, function(x, y) {
-        window.location.reload();
-    });
-}
-
-function stopTeamTalk() {
-    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'stop' }, function(x, y) {
-        window.location.reload();
-    });
-}
-
-function restartTeamTalk() {
-    XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'restart' }, function(x, y) {
-        window.location.reload();
-    });
-}
-
-function removeTeamTalk() {
-    if (confirm('<%:Are you sure you want to remove the container?%>')) {
-        XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'remove' }, function(x, y) {
-            window.location.reload();
-        });
-    }
-}
-
-function installDocker() {
-    if (confirm('<%:Install Docker on this device?%>')) {
-        XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'install_docker' }, function(x, y) {
-            alert(y.message || y.error || 'Done');
-            window.location.reload();
-        });
-    }
-}
-
-function setupWizard() {
-    if (confirm('<%:Run setup wizard to configure TeamTalk server?%>')) {
-        XHR.get('<%=luci.dispatcher.build_url("admin/services/teamtalk/docker_action")%>', { action: 'setup_wizard' }, function(x, y) {
-            alert(y.message || y.output || 'Setup completed');
-            window.location.reload();
-        });
-    }
-}
-</script>
 
 <%+footer%>
