@@ -1,0 +1,11 @@
+# Normalize text files and keep LF to avoid Makefile/shell/LuCI build issues
+* text=auto eol=lf
+
+# Explicitly force LF for build-sensitive files
+Makefile text eol=lf
+*.mk text eol=lf
+*.sh text eol=lf
+*.lua text eol=lf
+*.htm text eol=lf
+*.po text eol=lf
+*.md text eol=lf
