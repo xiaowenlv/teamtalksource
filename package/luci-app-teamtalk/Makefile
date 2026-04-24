@@ -25,22 +25,22 @@ define Package/luci-app-teamtalk
 endef
 
 define Package/luci-app-teamtalk/install
-  $(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
-  $(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/cbi
-  $(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/teamtalk
-  $(INSTALL_DIR) $(1)/usr/share/teamtalk
-  $(INSTALL_DIR) $(1)/etc/config
-  $(INSTALL_DIR) $(1)/etc/init.d
-  $(INSTALL_DIR) $(1)/usr/libexec/teamtalk
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/cbi
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/teamtalk
+	$(INSTALL_DIR) $(1)/usr/share/teamtalk
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_DIR) $(1)/usr/libexec/teamtalk
 
-  $(INSTALL_DATA) $(TOPDIR)/luasrc/controller/teamtalk.lua $(1)/usr/lib/lua/luci/controller/teamtalk.lua
-  $(INSTALL_DATA) $(TOPDIR)/luasrc/model/cbi/teamtalk.lua $(1)/usr/lib/lua/luci/model/cbi/teamtalk.lua
+	$(INSTALL_DATA) $(TOPDIR)/luasrc/controller/teamtalk.lua $(1)/usr/lib/lua/luci/controller/teamtalk.lua
+	$(INSTALL_DATA) $(TOPDIR)/luasrc/model/cbi/teamtalk.lua $(1)/usr/lib/lua/luci/model/cbi/teamtalk.lua
 
-  $(CP) -r $(TOPDIR)/luasrc/view/teamtalk/* $(1)/usr/lib/lua/luci/view/teamtalk/
-  $(CP) -r $(TOPDIR)/htdocs/adminkit/js $(1)/usr/share/teamtalk/
-  $(INSTALL_DATA) $(TOPDIR)/root/etc/config/teamtalk $(1)/etc/config/
-  $(INSTALL_BIN) $(TOPDIR)/root/etc/init.d/teamtalk $(1)/etc/init.d/
-  $(INSTALL_BIN) $(TOPDIR)/root/usr/libexec/teamtalk/teamtalk-helper.sh $(1)/usr/libexec/teamtalk/
+	$(CP) -r $(TOPDIR)/luasrc/view/teamtalk/* $(1)/usr/lib/lua/luci/view/teamtalk/
+	$(CP) -r $(TOPDIR)/htdocs/adminkit/js $(1)/usr/share/teamtalk/
+	$(INSTALL_DATA) $(TOPDIR)/root/etc/config/teamtalk $(1)/etc/config/
+	$(INSTALL_BIN) $(TOPDIR)/root/etc/init.d/teamtalk $(1)/etc/init.d/
+	$(INSTALL_BIN) $(TOPDIR)/root/usr/libexec/teamtalk/teamtalk-helper.sh $(1)/usr/libexec/teamtalk/
 endef
 
 $(eval $(call BuildPackage,luci-app-teamtalk))
